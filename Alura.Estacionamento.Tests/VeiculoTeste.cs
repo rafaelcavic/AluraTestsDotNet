@@ -87,6 +87,45 @@ namespace Alura.Estacionamento.Tests
             Assert.Contains("Tipo do Veículo: Automovel", dados);
         }
 
+        [Fact]
+        public void TestaNomeProprietarioVeiculoComMenosDeTresCaracteres()
+        {
+            //Arrange
+            string nomeProprietario = "Lu";
+
+            //Assert
+            Assert.Throws<System.FormatException>(
+                //Act
+                () => new Veiculo(nomeProprietario)
+                );
+        }
+
+        [Fact]
+        public void TestaMensagemDeExcecaoDoQuartoCartactereDaPlaca()
+        {
+            //Arrange
+            string placa = "ASDU8888";
+
+            //Assert
+            var mensagem = Assert.Throws<System.FormatException>(
+                () => new Veiculo().Placa = placa
+                );
+
+            Assert.Equal("O 4° caractere deve ser um hífen", mensagem.Message);
+        }
+
+        [Fact]
+        public void TestaSeOsUltimosCaracteresDaPlacaSaoSomenteNumeros()
+        {
+            //Arrange
+            string placa = "ASDU8388";
+
+            //Assert
+            Assert.Throws<System.FormatException>(
+                () => new Veiculo().Placa = placa
+                );
+        }
+
         public void Dispose()
         {
             SaidaConsoleTeste.WriteLine("Dispose incovado");
